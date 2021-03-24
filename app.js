@@ -2,10 +2,10 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const configMensaje = require('./configMensaje');
+const multipart = require('connect-multiparty');
 
 const app = express();
 
-// *** load routes
 let user_routes = require('./src/routes/reports.routes');
 
 // *** Config
@@ -24,6 +24,7 @@ app.use((req, res, next) => {
 });
 
 // *** base routes
+app.use('/user1', user_routes);
 app.use('/user2', user_routes);
 
 app.post('/formulario', (req, res) => {

@@ -12,7 +12,7 @@ module.exports = (formulario) => {
         }
     });
     const mailOptions = {
-        from: `"${formulario.nombre}👋🪐" <${formulario.email}>`,
+        from: `"${formulario.nombre}👋🔔" <${formulario.email}>`,
         to: 'ventas@easyaccess.com.mx', // Cambia esta parte por el destinatario
         subject: formulario.asunto,
         html: `

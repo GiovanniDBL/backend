@@ -12,13 +12,25 @@
     "license": "ISC",
     "dependencies": {
         "-": "0.0.1",
+        "bcryptjs": "^2.4.3",
         "body-parser": "^1.19.0",
+        "connect-flash": "^0.1.1",
+        "connect-multiparty": "^2.2.0",
         "cors": "^2.8.5",
         "express": "^4.17.1",
+        "express-handlebars": "^5.2.1",
+        "express-mysql-session": "^2.1.5",
+        "express-session": "^1.17.1",
+        "express-validator": "^6.10.0",
+        "jsonwebtoken": "^8.5.1",
+        "morgan": "^1.10.0",
         "mysql": "github:mysqljs/mysql",
         "nodemailer": "^6.4.17",
         "nodemon": "^2.0.6",
+        "passport": "^0.4.1",
+        "passport-local": "^1.0.0",
         "save": "^2.4.0",
-        "save-dev": "0.0.1-security"
+        "save-dev": "0.0.1-security",
+        "timeago.js": "^4.0.2"
     }
 }
