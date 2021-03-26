@@ -1,12 +1,24 @@
 const express = require('express');
+const morgan = require('morgan');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const configMensaje = require('./configMensaje');
-const multipart = require('connect-multiparty');
 
+// Initializations
 const app = express();
+//Settings
+const ports = process.env.PORT || 3000;
+// Middleware
+app.use(morgan('dev'));
+app.use(express.json());
+
+//Routes
 
 let user_routes = require('./src/routes/reports.routes');
+
+
+// Public
+
 
 // *** Config
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -28,9 +40,10 @@ app.use('/user1', user_routes);
 app.use('/user2', user_routes);
 
 app.post('/formulario', (req, res) => {
-    configMensaje(req.body);
-    res.status(200).send();
-})
-app.listen(3000, () => {
-    console.log('Servidor corriendo')
+        configMensaje(req.body);
+        res.status(200).send();
+    })
+    // Start Server
+app.listen(ports, () => {
+    console.log(`Servidor Corriendo, Port ${ports}`)
 });
