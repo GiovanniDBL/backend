@@ -1,5 +1,7 @@
 const { loginUsers } = require('../models/login.models')
 const easyConection = require('../database/database');
+const { request } = require('http');
+const { send } = require('process');
 
 function AuthController(request, response) {
 
@@ -8,16 +10,28 @@ function AuthController(request, response) {
     loginUsers.cuenta = params.cuenta;
     loginUsers.pass = params.pass;
 
-    let query = `CALL getUsers(?,?);`;
+
+    let query_verify = `CALL getUsers(?,?);`;
 
     if (loginUsers.cuenta && loginUsers.pass) {
 
-        easyConection.query(query, [loginUsers.cuenta, loginUsers.pass], (err) => {
+        easyConection.query(query_verify, [loginUsers.cuenta, loginUsers.pass], (err, rows) => {
 
             if (err) {
                 response.status(500).send({ message: 'NÚMERO DE CUENTA INCORRECTO' });
             } else {
-                response.status(200).send({ message: 'USUARIO CORRECTO' });
+
+                let result = JSON.parse(JSON.stringify(rows[0]));
+
+                if (JSON.stringify(result) == '[]') {
+                    response.status(404).send({ message: 'EL USUARIO NO EXISTE' });
+                } else {
+                    response.status(200).send({ message: 'EL USUARIO SI EXISTE' });
+                }
+
+
+
+                // response.status(200).send({ message: 'USUARIO CORRECTO' });
             }
 
         });

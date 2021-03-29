@@ -3,6 +3,7 @@ const morgan = require('morgan');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const configMensaje = require('./configMensaje');
+// const helmet = require('helmet');
 
 // Initializations
 const app = express();
@@ -17,7 +18,8 @@ app.use(express.json());
 // *** Config
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(cors())
+app.use(cors());
+// app.use(helmet());
 
 // *** set headers HTTP
 app.use((req, res, next) => {
@@ -36,6 +38,7 @@ let user_routes = require('./src/routes/reports.routes');
 // *** base routes
 app.use('/user1', user_routes);
 app.use('/user2', user_routes);
+app.use('/user3', user_routes);
 
 
 app.post('/formulario', (req, res) => {

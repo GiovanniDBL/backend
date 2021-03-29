@@ -7,8 +7,13 @@ const api = express.Router();
 
 
 // ...........   Make a firts user registtration   ........
+
+// Crear Reportes
 api.post('/reportes', userController.newReport);
+// Auth Login
 api.post('/login', userLogin.AuthController);
+// Crear Nuevos Usuarios *Solo para pruebas
+api.post('/', userController.newUser);
 
 
 module.exports = api;
