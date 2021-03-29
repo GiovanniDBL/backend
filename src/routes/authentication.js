@@ -1,10 +1,3 @@
-const express = require('express');
-const api = express.Router();
-const pool = require('../database/database');
+import { Router } from 'express'
 
-
-api.post('/login', (req, res) => {
-    console.log('recived');
-})
-
-module.exports = api;
+const router = Router();

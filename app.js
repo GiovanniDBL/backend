@@ -12,12 +12,6 @@ const ports = process.env.PORT || 3000;
 app.use(morgan('dev'));
 app.use(express.json());
 
-//Routes
-
-let user_routes = require('./src/routes/reports.routes');
-
-
-// Public
 
 
 // *** Config
@@ -35,9 +29,14 @@ app.use((req, res, next) => {
     next();
 });
 
+//Routes
+
+let user_routes = require('./src/routes/reports.routes');
+
 // *** base routes
 app.use('/user1', user_routes);
 app.use('/user2', user_routes);
+
 
 app.post('/formulario', (req, res) => {
         configMensaje(req.body);
