@@ -1,6 +1,8 @@
 const { reports } = require('../models/reports.models');
 const { usuarios } = require('../models/user.model');
 const easyConection = require('../database/database');
+const bcrypt = require('bcryptjs');
+// import * as bcrypt from 'bcryptjs';
 
 
 function newReport(request, response) {
@@ -61,9 +63,11 @@ function newUser(reques, response) {
         easyConection.query(query_saveUser, [usuarios.cuenta, usuarios.nombre, usuarios.pass, usuarios.email], (err) => {
 
 
+
             if (err) {
                 response.status(500).send({ message: 'ERROR AL CREAR USUARIO' });
             } else {
+
                 response.status(200).send({ message: 'USUARIO CREADO CORRECTAMENTE' });
             }
 

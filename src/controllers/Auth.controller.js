@@ -9,13 +9,14 @@ function AuthController(request, response) {
 
     loginUsers.cuenta = params.cuenta;
     loginUsers.pass = params.pass;
+    loginUsers.nombre = params.nombre;
 
 
-    let query_verify = `CALL getUsers(?,?);`;
+    let query_verify = `CALL getUsers(?,?,?);`;
 
-    if (loginUsers.cuenta && loginUsers.pass) {
+    if (loginUsers.cuenta && loginUsers.nombre && loginUsers.pass) {
 
-        easyConection.query(query_verify, [loginUsers.cuenta, loginUsers.pass], (err, rows) => {
+        easyConection.query(query_verify, [loginUsers.cuenta, loginUsers.nombre, loginUsers.pass], (err, rows) => {
 
             if (err) {
                 response.status(500).send({ message: 'NÚMERO DE CUENTA INCORRECTO' });
