@@ -3,7 +3,9 @@ const easyConection = require('../database/database');
 const { request } = require('http');
 const { send } = require('process');
 
+
 function AuthController(request, response) {
+
 
     const params = request.body;
 

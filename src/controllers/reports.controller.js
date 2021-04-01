@@ -2,10 +2,11 @@ const { reports } = require('../models/reports.models');
 const { usuarios } = require('../models/user.model');
 const easyConection = require('../database/database');
 const bcrypt = require('bcryptjs');
-// import * as bcrypt from 'bcryptjs';
+
 
 
 function newReport(request, response) {
+
 
 
     const params = request.body;
@@ -31,6 +32,7 @@ function newReport(request, response) {
             if (err) {
                 response.status(500).send({ message: 'NÚMERO DE CUENTA INCORRECTO' });
             } else {
+
                 response.status(200).send({ message: 'REPORTE ENVIADO' });
             }
 
@@ -48,6 +50,11 @@ function newReport(request, response) {
 
 function newUser(reques, response) {
 
+
+    const salt = bcrypt.genSaltSync(10);
+    const palabrasecreta = usuarios.pass;
+
+
     const params = reques.body;
 
     usuarios.cuenta = params.cuenta;
@@ -60,17 +67,21 @@ function newUser(reques, response) {
     if (usuarios.cuenta && usuarios.nombre && usuarios.pass && usuarios.email) {
 
 
-        easyConection.query(query_saveUser, [usuarios.cuenta, usuarios.nombre, usuarios.pass, usuarios.email], (err) => {
 
-
+        easyConection.query(query_saveUser, [usuarios.cuenta, usuarios.nombre, palabrasecreta, usuarios.email], (err) => {
 
             if (err) {
                 response.status(500).send({ message: 'ERROR AL CREAR USUARIO' });
             } else {
 
-                response.status(200).send({ message: 'USUARIO CREADO CORRECTAMENTE' });
+                bcrypt.hash(palabrasecreta, salt, (err, palabrasecretaencriptada) => {
+                    if (err) {
+                        response.status(500).send({ message: 'ERROR AL CREAR HASH' });
+                    } else {
+                        response.status(200).send({ message: 'USUARIO CREADI Y HASHEADO EXITOSO ' + palabrasecretaencriptada });
+                    }
+                });
             }
-
 
         });
 
