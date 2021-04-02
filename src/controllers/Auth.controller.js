@@ -4,12 +4,15 @@ const { request } = require('http');
 const { send } = require('process');
 const bcrypt = require('bcryptjs');
 const { usuarios } = require('../models/user.model')
+const jwt = require('jsonwebtoken');
 
+
+//* DECLARE JWT-secret
+const JWT_Secret = 'Dany_Bl98';
 
 function AuthController(request, response) {
 
-    const palabrasecreta = usuarios.pass;
-
+    const token = jwt.sign({ loginUsers }, 'my_secret_key');
     const params = request.body;
 
     loginUsers.cuenta = params.cuenta;
@@ -21,9 +24,13 @@ function AuthController(request, response) {
 
     if (loginUsers.cuenta && loginUsers.nombre && loginUsers.pass) {
 
-        bcrypt.compareSync(usuarios.pass, loginUsers.pass)
+
+
+
 
         easyConection.query(query_verify, [loginUsers.cuenta, loginUsers.nombre, loginUsers.pass], (err, rows) => {
+
+
 
             if (err) {
                 response.status(500).send({ message: 'NÚMERO DE CUENTA INCORRECTO' });
@@ -34,7 +41,8 @@ function AuthController(request, response) {
                 if (JSON.stringify(result) == '[]') {
                     response.status(404).send({ message: 'EL USUARIO NO EXISTE' });
                 } else {
-                    response.status(200).send({ message: 'EL USUARIO SI EXISTE' });
+                    response.status(200).send({ message: `EL USUARIO ${loginUsers.nombre} SI EXISTE`, token: token });
+
                 }
 
 

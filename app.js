@@ -3,6 +3,7 @@ const morgan = require('morgan');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const configMensaje = require('./configMensaje');
+const jwt = require('jsonwebtoken');
 // const helmet = require('helmet');
 
 // Initializations
@@ -36,6 +37,12 @@ app.use((req, res, next) => {
 let user_routes = require('./src/routes/reports.routes');
 
 // *** base routes
+
+app.post('/api/login', function(req, res) {
+    const user = { id: 3 };
+    const token = jwt.sign({ user }, 'my_secret_key');
+    res.json({ token: token });
+})
 app.use('/user1', user_routes);
 app.use('/user2', user_routes);
 app.use('/user3', user_routes);

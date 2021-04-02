@@ -3,18 +3,19 @@ const userController = require('../controllers/reports.controller');
 const userLogin = require('../controllers/Auth.controller');
 const { request, response } = require('express');
 const api = express.Router();
+const jwt = require('jsonwebtoken');
 
 
 
 
 
-// ...........   Make a firts user registtration   ........
+//? ...........   Make a firts user registtration   ........
 
-// Crear Reportes
+//* Crear Reportes
 api.post('/reportes', userController.newReport);
-// Auth Login
+//* Auth Login
 api.post('/login', userLogin.AuthController);
-// Crear Nuevos Usuarios *Solo para pruebas
+//* Crear Nuevos Usuarios *Solo para pruebas
 api.post('/', userController.newUser);
 
 
