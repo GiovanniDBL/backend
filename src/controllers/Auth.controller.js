@@ -2,10 +2,13 @@ const { loginUsers } = require('../models/login.models')
 const easyConection = require('../database/database');
 const { request } = require('http');
 const { send } = require('process');
+const bcrypt = require('bcryptjs');
+const { usuarios } = require('../models/user.model')
 
 
 function AuthController(request, response) {
 
+    const palabrasecreta = usuarios.pass;
 
     const params = request.body;
 
@@ -17,6 +20,8 @@ function AuthController(request, response) {
     let query_verify = `CALL getUsers(?,?,?);`;
 
     if (loginUsers.cuenta && loginUsers.nombre && loginUsers.pass) {
+
+        bcrypt.compareSync(usuarios.pass, loginUsers.pass)
 
         easyConection.query(query_verify, [loginUsers.cuenta, loginUsers.nombre, loginUsers.pass], (err, rows) => {
 

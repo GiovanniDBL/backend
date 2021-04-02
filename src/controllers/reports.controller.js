@@ -64,26 +64,82 @@ function newUser(reques, response) {
 
     let query_saveUser = `CALL setUsers(?,?,?,?);`;
 
+
     if (usuarios.cuenta && usuarios.nombre && usuarios.pass && usuarios.email) {
 
+        // ENCRIPTACION DE CONTRASEÑA
+        usuarios.pass = bcrypt.hashSync(palabrasecreta, salt);
 
 
-        easyConection.query(query_saveUser, [usuarios.cuenta, usuarios.nombre, palabrasecreta, usuarios.email], (err) => {
+        easyConection.query(query_saveUser, [usuarios.cuenta, usuarios.nombre, usuarios.pass, usuarios.email], (err) => {
 
             if (err) {
                 response.status(500).send({ message: 'ERROR AL CREAR USUARIO' });
             } else {
 
-                bcrypt.hash(palabrasecreta, salt, (err, palabrasecretaencriptada) => {
-                    if (err) {
-                        response.status(500).send({ message: 'ERROR AL CREAR HASH' });
-                    } else {
-                        response.status(200).send({ message: 'USUARIO CREADI Y HASHEADO EXITOSO ' + palabrasecretaencriptada });
-                    }
-                });
-            }
 
+
+                response.status(200).send({ message: 'USUARIO CREADO ' + usuarios.pass });
+            }
         });
+
+
+        // bcrypt.hash(palabrasecreta, salt, (err, palabrasecretaencriptada) => {
+        //     if (err) {
+        //         response.status(500).send({ message: 'ERROR AL CREAR HASH' });
+        //     } else {
+
+        //         response.status(200).send({ message: 'USUARIO CREADI Y HASHEADO EXITOSO ' + palabrasecretaencriptada });
+
+
+
+
+        //     }
+        // });
+
+
+
+        // easyConection.query(query_saveUser, [usuarios.cuenta, usuarios.nombre, usuarios.pass, usuarios.email], (err) => {
+
+        //     if (err) {
+        //         response.status(500).send({ message: 'ERROR AL CREAR USUARIO' });
+        //     } else {
+
+        //         bcrypt.hash(palabrasecreta, salt, (err, palabrasecretaencriptada) => {
+        //             if (err) {
+        //                 response.status(500).send({ message: 'ERROR AL CREAR HASH' });
+        //             } else {
+
+
+
+        //                 response.status(200).send({ message: 'USUARIO CREADI Y HASHEADO EXITOSO ' + palabrasecretaencriptada });
+
+
+
+
+        //             }
+        //         });
+        //     }
+
+        // });
+        // easyConection.query(query_saveUser, [usuarios.cuenta, usuarios.nombre, usuarios.pass, usuarios.email], (err) => {
+
+        //     if (err) {
+        //         response.status(500).send({ message: 'ERROR AL CREAR USUARIO' });
+        //     } else {
+
+        //         bcrypt.hash(palabrasecreta, salt, (err, palabrasecretaencriptada) => {
+        //             if (err) {
+        //                 response.status(500).send({ message: 'ERROR AL CREAR HASH' });
+        //             } else {
+
+        //                 response.status(200).send({ message: 'USUARIO CREADI Y HASHEADO EXITOSO ' + palabrasecretaencriptada });
+
+        //             }
+        //         });
+        //     }
+
+        // });
 
 
 
