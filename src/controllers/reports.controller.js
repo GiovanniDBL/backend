@@ -8,6 +8,7 @@ const bcrypt = require('bcryptjs');
 
 function newReport(request, response) {
 
+    //*request.json({ message: 'this is protected' });
 
 
     const params = request.body;
