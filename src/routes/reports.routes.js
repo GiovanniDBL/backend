@@ -9,7 +9,7 @@ const jwt = require('jsonwebtoken');
 
 
 
-//? ...........   Make a firts user registtration   ........
+//? ...........   RUTAS  ........
 
 //* Crear Reportes
 api.post('/reportes', userController.newReport);
