@@ -1,9 +1,10 @@
 const express = require('express');
 const userController = require('../controllers/reports.controller');
 const userLogin = require('../controllers/Auth.controller');
+const getTickets = require('../controllers/Tickets.controller');
 const { request, response } = require('express');
 const api = express.Router();
-const jwt = require('jsonwebtoken');
+
 
 
 
@@ -31,5 +32,8 @@ function ensureToken(req, res, next) {
         res.sendStatus(403);
     }
 }
+
+//* Traer todos los reportes a la seccion del panel "Tickets"
+api.get('/tickets', getTickets.TraerTickets);
 
 module.exports = api;

@@ -43,16 +43,23 @@ app.post('/api/login', function(req, res) {
     const token = jwt.sign({ user }, 'my_secret_key');
     res.json({ token: token });
 })
+
+// ** Login
 app.use('/user1', user_routes);
+//** Envíar reporte
 app.use('/user2', user_routes);
+//** Crear usuario */
 app.use('/user3', user_routes);
+//** Traer Reportes */
+app.use('/user4', user_routes);
 
-
+//** Envíar correo desde el formulario contacto easyaccess */
 app.post('/formulario', (req, res) => {
-        configMensaje(req.body);
-        res.status(200).send();
-    })
-    // Start Server
+    configMensaje(req.body);
+    res.status(200).send();
+})
+
+// *Start Server
 app.listen(ports, () => {
     console.log(`Servidor Corriendo, Port ${ports}`)
 });
