@@ -21,7 +21,7 @@ function newReport(request, response) {
     reports.asunto = params.asunto;
 
 
-    let query = `CALL setReports(?,?,?,?,?,?);`;
+    let query = `CALL setReports (?,?,?,?,?,?);`;
 
     if (reports.cuenta && reports.departamento && reports.prioridad && reports.reporte && reports.asunto) {
 

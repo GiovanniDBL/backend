@@ -50,8 +50,11 @@ app.use('/user1', user_routes);
 app.use('/user2', user_routes);
 //** Crear usuario */
 app.use('/user3', user_routes);
-//** Traer Reportes */
-app.use('/user4', user_routes);
+//** Traer Tickets al panel vuejs
+app.use('/tickets', user_routes);
+//** Eliminar Tickets de panel vuejs 
+app.use('/tickets', user_routes);
+
 
 //** Envíar correo desde el formulario contacto easyaccess */
 app.post('/formulario', (req, res) => {
