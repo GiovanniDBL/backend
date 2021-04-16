@@ -12,7 +12,22 @@ function TraerTickets(request, response) {
         } else {
             response.send(filas)
         }
-    })
+    });
+
+
+
+}
+//* FUNCIÓN MOSTRAR TODOS LOS TICKETS EN EL PANEL ****
+function FiltrarTickets(request, response) {
+
+    easyConection.query('SELECT * FROM reportes WHERE departamento = ?  ', [request.params.departamento], (error, fila) => {
+        if (error) {
+            throw error;
+        } else {
+            response.send(fila)
+        }
+    });
+
 
 }
 
@@ -33,5 +48,6 @@ function EliminarTickets(request, response) {
 
 module.exports = {
     TraerTickets,
+    FiltrarTickets,
     EliminarTickets
 }

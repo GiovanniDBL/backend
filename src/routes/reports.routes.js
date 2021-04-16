@@ -35,6 +35,10 @@ function ensureToken(req, res, next) {
 
 //* Traer todos los reportes a la seccion del panel "Tickets"
 api.get('/getReports', getTickets.TraerTickets);
+//* Traer todos los reportes a la seccion del panel "Tickets"
+api.get('/getReports/:departamento', getTickets.TraerTickets);
+//* Filtrar los reportes a la seccion del panel "Tickets"
+api.get('/filtrarReports/:departamento', getTickets.FiltrarTickets);
 //* Eliminar tickets del panel
 api.delete('/deleteReports/:id', getTickets.EliminarTickets);
 
