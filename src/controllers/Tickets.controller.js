@@ -6,7 +6,7 @@ const { send } = require('process');
 function TraerTickets(request, response) {
 
 
-    easyConection.query('SELECT * FROM reportes', (error, filas) => {
+    easyConection.query('SELECT * FROM reportes INNER JOIN usuarios ON reportes.cuenta = usuarios.cuenta', (error, filas) => {
         if (error) {
             throw error;
         } else {
