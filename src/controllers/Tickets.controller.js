@@ -6,7 +6,7 @@ const { send } = require('process');
 function TraerTickets(request, response) {
 
 
-    easyConection.query('SELECT * FROM reportes INNER JOIN usuarios ON reportes.cuenta = usuarios.cuenta', (error, filas) => {
+    easyConection.query('SELECT * FROM usuarios INNER JOIN reportes ON reportes.cuenta = usuarios.cuenta', (error, filas) => {
         if (error) {
             throw error;
         } else {
@@ -20,7 +20,7 @@ function TraerTickets(request, response) {
 //* FUNCIÓN MOSTRAR TICKET POR ID ****
 function VerTickets(request, response) {
 
-    easyConection.query('SELECT * FROM reportes INNER JOIN usuarios ON reportes.cuenta = usuarios.cuenta WHERE id_reporte = ?  ', [request.params.id_reporte], (error, fila) => {
+    easyConection.query('SELECT * FROM usuarios INNER JOIN reportes ON reportes.cuenta = usuarios.cuenta WHERE id_reporte = ?  ', [request.params.id_reporte], (error, fila) => {
         if (error) {
             throw error;
         } else {
