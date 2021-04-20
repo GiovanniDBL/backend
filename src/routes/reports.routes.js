@@ -38,7 +38,7 @@ api.get('/getReports', getTickets.TraerTickets);
 //* Traer todos los reportes a la seccion del panel "Tickets"
 api.get('/getReports/:departamento', getTickets.TraerTickets);
 //* Filtrar los reportes a la seccion del panel "Tickets"
-api.get('/filtrarReports/:departamento', getTickets.FiltrarTickets);
+api.get('/verTickets/:id_reporte', getTickets.VerTickets);
 //* Eliminar tickets del panel
 api.delete('/deleteReports/:id', getTickets.EliminarTickets);
 

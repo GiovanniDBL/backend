@@ -17,10 +17,10 @@ function TraerTickets(request, response) {
 
 
 }
-//* FUNCIÓN MOSTRAR TODOS LOS TICKETS EN EL PANEL ****
-function FiltrarTickets(request, response) {
+//* FUNCIÓN MOSTRAR TICKET POR ID ****
+function VerTickets(request, response) {
 
-    easyConection.query('SELECT * FROM reportes WHERE departamento = ?  ', [request.params.departamento], (error, fila) => {
+    easyConection.query('SELECT * FROM reportes INNER JOIN usuarios ON reportes.cuenta = usuarios.cuenta WHERE id_reporte = ?  ', [request.params.id_reporte], (error, fila) => {
         if (error) {
             throw error;
         } else {
@@ -48,6 +48,6 @@ function EliminarTickets(request, response) {
 
 module.exports = {
     TraerTickets,
-    FiltrarTickets,
+    VerTickets,
     EliminarTickets
 }
