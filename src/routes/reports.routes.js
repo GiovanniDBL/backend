@@ -42,4 +42,10 @@ api.get('/verTickets/:id_reporte', getTickets.VerTickets);
 //* Eliminar tickets del panel
 api.delete('/deleteReports/:id', getTickets.EliminarTickets);
 
+//? ...........   RUTAS LOGIN AUTHENTIATION PANEL EASYACCESS  ........
+
+api.post('/signup')
+api.post('/signin')
+
+
 module.exports = api;

@@ -1,14 +1,15 @@
 {
-    "name": "backend",
+    "name": "easyaccess",
     "version": "1.0.0",
-    "description": "",
+    "description": "APIs para proyecto Easyaccess",
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "nodemon app.js"
+        "build": "babel src --out-dir build",
+        "start": "nodemon app.js --exec babel-node"
     },
     "keywords": [],
-    "author": "",
+    "author": "GiovanniBL",
     "license": "ISC",
     "dependencies": {
         "-": "0.0.1",
@@ -19,6 +20,7 @@
         "connect-flash": "^0.1.1",
         "connect-multiparty": "^2.2.0",
         "cors": "^2.8.5",
+        "dotenv": "^8.2.0",
         "express": "^4.17.1",
         "express-handlebars": "^5.2.1",
         "express-mysql-session": "^2.1.5",
@@ -38,5 +40,11 @@
         "save-dev": "0.0.1-security",
         "timeago.js": "^4.0.2",
         "typeorm": "^0.2.31"
+    },
+    "devDependencies": {
+        "@babel/cli": "^7.13.16",
+        "@babel/core": "^7.13.16",
+        "@babel/node": "^7.13.13",
+        "@babel/preset-env": "^7.13.15"
     }
 }

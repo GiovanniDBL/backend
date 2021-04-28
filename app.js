@@ -4,10 +4,14 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const configMensaje = require('./configMensaje');
 const jwt = require('jsonwebtoken');
-// const helmet = require('helmet');
+// import pkg from './package.json'
+const pkg = require('./package.json')
+
 
 // Initializations
 const app = express();
+
+app.set('pkg', pkg);
 //Settings
 const ports = process.env.PORT || 3000;
 // Middleware
@@ -42,6 +46,19 @@ app.post('/api/login', function(req, res) {
     const user = { id: 3 };
     const token = jwt.sign({ user }, 'my_secret_key');
     res.json({ token: token });
+})
+
+
+//** RUTA INICIAL DEL SERVIDOR 3000 */
+app.get('/', (req, res) => {
+    res.json({
+        name: app.get('pkg').name,
+        author: app.get('pkg').author,
+        description: app.get('pkg').description,
+        version: app.get('pkg').version,
+
+    })
+
 })
 
 // ** Login

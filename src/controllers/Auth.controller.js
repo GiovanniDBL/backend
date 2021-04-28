@@ -9,7 +9,7 @@ const jwt = require('jsonwebtoken');
 
 //* DECLARE JWT-secret
 const JWT_Secret = 'Dany_Bl98';
-
+//* LOGIN DE PÁGINA WEB EASYACCESS
 function AuthController(request, response) {
 
     const token = jwt.sign({ loginUsers }, 'my_secret_key');
@@ -24,13 +24,7 @@ function AuthController(request, response) {
 
     if (loginUsers.cuenta && loginUsers.nombre && loginUsers.pass) {
 
-
-
-
-
         easyConection.query(query_verify, [loginUsers.cuenta, loginUsers.nombre, loginUsers.pass], (err, rows) => {
-
-
 
             if (err) {
                 response.status(500).send({ message: 'NÚMERO DE CUENTA INCORRECTO' });
@@ -44,9 +38,6 @@ function AuthController(request, response) {
                     response.status(200).send({ message: `EL USUARIO ${loginUsers.nombre} SI EXISTE`, token: token });
 
                 }
-
-
-
                 // response.status(200).send({ message: 'USUARIO CORRECTO' });
             }
 
@@ -56,6 +47,8 @@ function AuthController(request, response) {
         response.status(400).send({ message: 'Faltan datos de usuario' });
     }
 }
+
+
 
 module.exports = {
     AuthController
