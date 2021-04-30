@@ -4,19 +4,53 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const configMensaje = require('./configMensaje');
 const jwt = require('jsonwebtoken');
-// import pkg from './package.json'
-const pkg = require('./package.json')
 
 
-// Initializations
+
+// Invocamos express
 const app = express();
 
-app.set('pkg', pkg);
-//Settings
+
+// Puerto de servidor
+
 const ports = process.env.PORT || 3000;
-// Middleware
+
+// - Seteamos urlencoded para capturar los datos del formulario
 app.use(morgan('dev'));
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
+// Invocamos dotenv
+const dotenv = require('dotenv');
+dotenv.config({ path: './src/env/.env' })
+
+// directorio public
+app.use('/resources', express.static('public'));
+app.use('/resources', express.static(__dirname + '/public'));
+
+// Establecer motor de plantillas  ejs
+app.set('view engine', 'ejs');
+
+// invocamos a bcryptjs
+const bcryptjs = require('bcryptjs');
+
+// variables de session 
+const session = require('express-session');
+app.use(session({
+    secret: 'secret',
+    resave: true,
+    saveUninitialized: true
+}));
+
+// Invocamos el módulo de conexión de la BD
+const connection = require('./src/database/db');
+
+// Estableciendo las rutas
+//** RUTA INICIAL DEL SERVIDOR 3000 */
+app.get('/', (req, res) => {
+    res.render('index');
+});
+
 
 
 
@@ -49,17 +83,7 @@ app.post('/api/login', function(req, res) {
 })
 
 
-//** RUTA INICIAL DEL SERVIDOR 3000 */
-app.get('/', (req, res) => {
-    res.json({
-        name: app.get('pkg').name,
-        author: app.get('pkg').author,
-        description: app.get('pkg').description,
-        version: app.get('pkg').version,
 
-    })
-
-})
 
 // ** Login
 app.use('/user1', user_routes);
@@ -73,6 +97,8 @@ app.use('/tickets', user_routes);
 app.use('/tickets', user_routes);
 
 
+
+
 //** Envíar correo desde el formulario contacto easyaccess */
 app.post('/formulario', (req, res) => {
     configMensaje(req.body);
@@ -81,5 +107,5 @@ app.post('/formulario', (req, res) => {
 
 // *Start Server
 app.listen(ports, () => {
-    console.log(`Servidor Corriendo, Port ${ports}`)
+    console.log(`Servidor Easyaccess Corriendo, Port ${ports}`)
 });
