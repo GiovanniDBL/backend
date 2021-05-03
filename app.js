@@ -47,9 +47,7 @@ const connection = require('./src/database/db');
 
 // Estableciendo las rutas
 //** RUTA INICIAL DEL SERVIDOR 3000 */
-app.get('/', (req, res) => {
-    res.render('index', { msg: 'ESTO ES UN MENSAJE DESDE NODE' });
-});
+
 app.get('/login', (req, res) => {
     res.render('login');
 });
@@ -57,6 +55,102 @@ app.get('/register', (req, res) => {
     res.render('register');
 });
 
+
+// *REGISTRACIÓN PRUEBA TUTORIAL
+app.post('/register', async(req, res) => {
+
+    const user = req.body.user;
+    const rol = req.body.rol;
+    const pass = req.body.pass;
+    let passwordHash = await bcryptjs.hash(pass, 8)
+
+    connection.query('INSERT INTO panel_users SET ?', { rol: rol, nombre: user, pass: passwordHash }, async(error, results) => {
+        if (error) {
+            console.log(error);
+        } else {
+            res.render('register', {
+                alert: true,
+                alertTitle: "Registration",
+                alertMessage: "¡Succesful Registration!",
+                alertIcon: 'success',
+                showConfirmButton: false,
+                timer: 1500,
+                ruta: ''
+            })
+        }
+    })
+
+})
+
+// *AUTHENTICATION PRUEBA TUTORIAL
+app.post('/auth', async(req, res) => {
+    const nombre = req.body.user;
+    const pass = req.body.pass;
+    let passwordHaash = await bcryptjs.hash(pass, 8);
+
+    if (nombre && pass) {
+        connection.query('SELECT * FROM panel_users WHERE nombre = ?', [nombre], async(error, results) => {
+            if (results.lenght == 0 || !(await bcryptjs.compare(pass, results[0].pass))) {
+
+                res.render('login', {
+                    alert: true,
+                    alertTitle: "Error",
+                    alertMessage: "Usuario y/o password incorrectas",
+                    alertIcon: 'error',
+                    showConfirmButton: true,
+                    timer: 1500,
+                    ruta: 'login'
+                })
+            } else {
+                req.session.loggedin = true;
+                req.session.nombre = results[0].nombre;
+                req.session.rol = results[0].rol;
+                res.render('login', {
+                    alert: true,
+                    alertTitle: "Conexión exitosa",
+                    alertMessage: "¡ LOGIN CORRECTO !",
+                    alertIcon: 'success',
+                    showConfirmButton: false,
+                    timer: 1500,
+                    ruta: ''
+                })
+            }
+        })
+    } else {
+        res.render('login', {
+            alert: true,
+            alertTitle: "Advertencia",
+            alertMessage: "¡ Por favor ingrese un usuario y/o password !",
+            alertIcon: 'warning',
+            showConfirmButton: false,
+            timer: 2000,
+            ruta: 'login'
+        })
+    }
+})
+
+// *AUTH PAGES
+app.get('/', (req, res) => {
+    if (req.session.loggedin) {
+        res.render('index', {
+            login: true,
+            name: req.session.nombre,
+            rol: req.session.rol
+        })
+    } else {
+        res.render('index', {
+            login: false,
+            name: 'Debe iniciar sesión'
+        })
+    }
+})
+
+// *LOGOUT
+app.get('/logout', (req, res) => {
+    req.session.destroy(() => {
+        res.redirect('/');
+    })
+})
 
 
 
