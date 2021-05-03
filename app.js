@@ -48,7 +48,13 @@ const connection = require('./src/database/db');
 // Estableciendo las rutas
 //** RUTA INICIAL DEL SERVIDOR 3000 */
 app.get('/', (req, res) => {
-    res.render('index');
+    res.render('index', { msg: 'ESTO ES UN MENSAJE DESDE NODE' });
+});
+app.get('/login', (req, res) => {
+    res.render('login');
+});
+app.get('/register', (req, res) => {
+    res.render('register');
 });
 
 
