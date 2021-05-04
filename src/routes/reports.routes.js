@@ -44,7 +44,8 @@ api.delete('/deleteReports/:id', getTickets.EliminarTickets);
 
 //? ...........   RUTAS LOGIN AUTHENTIATION PANEL EASYACCESS  ........
 
-
+api.post('/register', userLogin.NuevoUsuario);
+api.post('/loginpanel', userLogin.LoginPanel);
 
 
 module.exports = api;

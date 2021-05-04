@@ -196,6 +196,11 @@ app.use('/tickets', user_routes);
 //** Eliminar Tickets de panel vuejs 
 app.use('/tickets', user_routes);
 
+//** Crear usuario paneleasyaccess*/
+app.use('/registerPanel', user_routes);
+//** Login usuario paneleasyacccess*/
+app.use('/user', user_routes);
+
 
 
 

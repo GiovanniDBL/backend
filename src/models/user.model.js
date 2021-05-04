@@ -5,6 +5,11 @@ module.exports = {
         pass: 'String',
         email: 'String',
         created: 'String'
+    },
+    Panelusuarios: {
+        nombre: 'String',
+        rol: 'String',
+        pass: 'String'
     }
 
 }

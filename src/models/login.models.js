@@ -4,9 +4,8 @@ module.exports = {
         nombre: 'String',
         pass: 'String'
     },
-    usuarios_panel: {
+    loginPanel: {
         nombre: 'String',
         pass: 'String',
-        rol: 'String'
     }
 }

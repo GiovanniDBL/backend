@@ -1,6 +1,9 @@
-const { loginUsers, usuarios_panel } = require('../models/login.models')
+const { loginUsers, loginPanel } = require('../models/login.models')
 const easyConection = require('../database/database');
+const connection = require('../database/db');
 const jwt = require('jsonwebtoken');
+const bcryptjs = require('bcryptjs');
+const { Panelusuarios } = require('../models/user.model');
 
 
 //* DECLARE JWT-secret
@@ -44,48 +47,58 @@ function AuthController(request, response) {
     }
 }
 
-//* LOGIN DE PANEL EASYACCESS
-function AuthPanel(request, response) {
+//* REGISTRO DE USUARIO PANEL EASYACCESS
+async function NuevoUsuario(request, res) {
 
+    const params = request.body;
+    Panelusuarios.nombre = params.nombre;
+    Panelusuarios.rol = params.rol;
+    Panelusuarios.pass = params.pass;
+
+    let passwordHash = await bcryptjs.hash(Panelusuarios.pass, 8);
+
+    connection.query('INSERT INTO panel_users SET ?', { rol: Panelusuarios.rol, nombre: Panelusuarios.nombre, pass: passwordHash }, async(error, results) => {
+        if (error) {
+            res.status(500).send({ message: 'ERROR AL CREAR USUARIO' });
+        } else {
+            res.status(200).send({ message: 'USUARIO CREADO ' });
+        }
+    })
+
+}
+
+//* LOGIN PANEL EASYACCESS
+async function LoginPanel(request, res) {
 
     const params = request.body;
 
-    usuarios_panel.nombre = params.pass;
-    usuarios_panel.pass = params.nombre;
-    usuarios_panel.id_roles = params.id_roles;
+    loginPanel.nombre = params.nombre;
+    loginPanel.pass = params.pass;
+    let passwordHaash = await bcryptjs.hash(loginPanel.pass, 8);
 
+    if (loginPanel.nombre && loginPanel.pass) {
+        connection.query('SELECT * FROM panel_users WHERE nombre = ?', [loginPanel.nombre], async(error, results) => {
+            if (results.lenght == 0 || !(await bcryptjs.compare(loginPanel.pass, results[0].pass))) {
 
-    let query_verify = `CALL getUsers(?,?,?);`;
+                res.status(500).send({ message: 'Usuario y/o password incorrectas' });
 
-    if (loginUsers.cuenta && loginUsers.nombre && loginUsers.pass) {
-
-        easyConection.query(query_verify, [loginUsers.cuenta, loginUsers.nombre, loginUsers.pass], (err, rows) => {
-
-            if (err) {
-                response.status(500).send({ message: 'NÚMERO DE CUENTA INCORRECTO' });
             } else {
 
-                let result = JSON.parse(JSON.stringify(rows[0]));
 
-                if (JSON.stringify(result) == '[]') {
-                    response.status(404).send({ message: 'EL USUARIO NO EXISTE' });
-                } else {
-                    response.status(200).send({ message: `EL USUARIO ${loginUsers.nombre} SI EXISTE`, token: token });
 
-                }
-                // response.status(200).send({ message: 'USUARIO CORRECTO' });
+                res.status(200).send({ message: 'LOGIN CORRECTO ' });
             }
-
-        });
+        })
     } else {
-
-        response.status(400).send({ message: 'Faltan datos de usuario' });
+        res.status(400).send({ message: 'Por favor ingrese un usuario y/o password' });
     }
+
 }
 
 
 
 module.exports = {
     AuthController,
-    AuthPanel
+    NuevoUsuario,
+    LoginPanel
 }
