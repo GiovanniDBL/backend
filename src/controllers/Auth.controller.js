@@ -70,6 +70,7 @@ async function NuevoUsuario(request, res) {
 //* LOGIN PANEL EASYACCESS
 async function LoginPanel(request, res) {
 
+    const token = jwt.sign({ loginPanel }, 'my_secret_key');
     const params = request.body;
 
     loginPanel.nombre = params.nombre;
@@ -80,17 +81,20 @@ async function LoginPanel(request, res) {
         connection.query('SELECT * FROM panel_users WHERE nombre = ?', [loginPanel.nombre], async(error, results) => {
             if (results.lenght == 0 || !(await bcryptjs.compare(loginPanel.pass, results[0].pass))) {
 
-                res.status(500).send({ message: 'Usuario y/o password incorrectas' });
+                res.status(202).send({ message: 'Usuario y/o password incorrectas' });
+                console.log('Usuario y/o password incorrectas');
 
             } else {
 
 
 
-                res.status(200).send({ message: 'LOGIN CORRECTO ' });
+                res.status(200).send({ message: `El usuario ${loginPanel.nombre} es correcto`, token: token });
+                console.log('LOGIN CORRECTO ');
             }
         })
     } else {
-        res.status(400).send({ message: 'Por favor ingrese un usuario y/o password' });
+        res.status(202).send({ message: 'Por favor ingrese un usuario y/o password' });
+        console.log('Por favor ingrese un usuario y/o password');
     }
 
 }
