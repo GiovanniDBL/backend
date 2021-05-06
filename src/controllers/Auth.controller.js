@@ -78,7 +78,7 @@ async function LoginPanel(request, res) {
     let passwordHaash = await bcryptjs.hash(loginPanel.pass, 8);
 
     if (loginPanel.nombre && loginPanel.pass) {
-        connection.query('SELECT * FROM panel_users WHERE nombre = ?', [loginPanel.nombre], async(error, results) => {
+        connection.query('SELECT * FROM roles INNER JOIN panel_users ON panel_users.rol = roles.rol WHERE nombre = ?', [loginPanel.nombre], async(error, results) => {
             if (results.lenght == 0 || !(await bcryptjs.compare(loginPanel.pass, results[0].pass))) {
 
                 res.status(202).send({ message: 'Usuario y/o password incorrectas' });
@@ -88,7 +88,12 @@ async function LoginPanel(request, res) {
 
 
 
-                res.status(200).send({ message: `El usuario ${loginPanel.nombre} es correcto`, token: token });
+                res.status(200).send({
+                    message: `Sesión Exitosa`,
+                    token: token,
+                    nombre: loginPanel.nombre,
+                    role: results[0].rol
+                });
                 console.log('LOGIN CORRECTO ');
             }
         })
