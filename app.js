@@ -200,6 +200,8 @@ app.use('/tickets', user_routes);
 app.use('/registerPanel', user_routes);
 //** Login usuario paneleasyacccess*/
 app.use('/user', user_routes);
+//** Crear notas en el panel */
+app.use('/detalles', user_routes);
 
 
 

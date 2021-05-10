@@ -2,6 +2,7 @@ const express = require('express');
 const userController = require('../controllers/reports.controller');
 const userLogin = require('../controllers/Auth.controller');
 const getTickets = require('../controllers/Tickets.controller');
+const Crearnota = require('../controllers/notas.controller');
 const { request, response } = require('express');
 const api = express.Router();
 
@@ -46,6 +47,9 @@ api.delete('/deleteReports/:id', getTickets.EliminarTickets);
 
 api.post('/register', userLogin.NuevoUsuario);
 api.post('/loginpanel', userLogin.LoginPanel);
+
+//? RUTA CREAR NOTA PARA REPORTES DEL PANEL .............
+api.post('/notas', Crearnota.CrearNota);
 
 
 module.exports = api;

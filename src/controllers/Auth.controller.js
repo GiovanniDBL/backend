@@ -84,6 +84,7 @@ async function LoginPanel(request, res) {
                 res.status(202).send({ message: 'Usuario y/o password incorrectas' });
                 console.log('Usuario y/o password incorrectas');
 
+
             } else {
 
 
