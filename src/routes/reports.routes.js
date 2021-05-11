@@ -49,7 +49,8 @@ api.post('/register', userLogin.NuevoUsuario);
 api.post('/loginpanel', userLogin.LoginPanel);
 
 //? RUTA CREAR NOTA PARA REPORTES DEL PANEL .............
-api.post('/notas', Crearnota.CrearNota);
+api.post('/CrearNota', Crearnota.CrearNota);
+api.get('/TraerNotas/:id_reporte', Crearnota.TraerNotas);
 
 
 module.exports = api;

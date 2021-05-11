@@ -1,7 +1,7 @@
 module.exports = {
     notasPanel: {
         nombre: 'String',
-        cuenta: 'String',
+        id_reporte: 'String',
         nota: 'String'
     }
 }

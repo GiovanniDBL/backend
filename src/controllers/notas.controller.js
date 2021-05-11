@@ -5,14 +5,14 @@ function CrearNota(request, response) {
     const params = request.body;
 
     notasPanel.nombre = params.nombre;
-    notasPanel.cuenta = params.cuenta;
+    notasPanel.id_reporte = params.id_reporte;
     notasPanel.nota = params.nota;
 
     let query_notas = `CALL setnotas (?,?,?);`;
 
-    if (notasPanel.nota && notasPanel.cuenta && notasPanel.nota) {
+    if (notasPanel.nota && notasPanel.id_reporte && notasPanel.nota) {
 
-        connection.query(query_notas, [notasPanel.nombre, notasPanel.cuenta, notasPanel.nota], (err) => {
+        connection.query(query_notas, [notasPanel.nombre, notasPanel.id_reporte, notasPanel.nota], (err) => {
 
 
             if (err) {
@@ -33,6 +33,18 @@ function CrearNota(request, response) {
 
 }
 
+function TraerNotas(request, response) {
+
+    connection.query('SELECT * FROM notas INNER JOIN reportes  ON reportes.id_reporte = notas.id_reporte WHERE reportes.id_reporte = ?', [request.params.id_reporte], (error, filas) => {
+        if (error) {
+            throw error;
+        } else {
+            response.send(filas)
+        }
+    });
+
+}
 module.exports = {
-    CrearNota
+    CrearNota,
+    TraerNotas
 }
