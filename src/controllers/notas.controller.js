@@ -44,7 +44,24 @@ function TraerNotas(request, response) {
     });
 
 }
+
+function EliminarNotas(request, response) {
+
+
+    connection.query('DELETE FROM notas WHERE id_nota = ?', [request.params.id], function(error, filas) {
+
+        if (error) {
+            throw error;
+        } else {
+
+            // response.send(filas)
+            response.status(200).send({ message: 'NOTA ELIMINADA CORRECTAMENTE' });
+            console.log('NOTA ELIMINADA CORRECTAMENTE');
+        }
+    })
+}
 module.exports = {
     CrearNota,
-    TraerNotas
+    TraerNotas,
+    EliminarNotas
 }
