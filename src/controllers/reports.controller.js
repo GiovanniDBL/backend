@@ -13,7 +13,7 @@ function newReport(request, response) {
 
     const params = request.body;
 
-    reports.cuenta = params.cuenta;
+    reports.usuario = params.usuario;
     reports.departamento = params.departamento;
     reports.prioridad = params.prioridad;
     reports.reporte = params.reporte;
@@ -21,14 +21,14 @@ function newReport(request, response) {
     reports.asunto = params.asunto;
 
 
-    let query = `CALL setReports (?,?,?,?,?,?);`;
+    let query = `CALL setTickets (?,?,?,?,?,?);`;
 
-    if (reports.cuenta && reports.departamento && reports.prioridad && reports.reporte && reports.asunto) {
-
-
+    if (reports.usuario && reports.departamento && reports.prioridad && reports.reporte && reports.asunto) {
 
 
-        easyConection.query(query, [reports.cuenta, reports.departamento, reports.prioridad, reports.reporte, reports.multimedia, reports.asunto], (err) => {
+
+
+        easyConection.query(query, [reports.usuario, reports.departamento, reports.prioridad, reports.reporte, reports.multimedia, reports.asunto], (err) => {
 
 
             if (err) {

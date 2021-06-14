@@ -1,7 +1,7 @@
 module.exports = {
     reports: {
         id_reporte: 'String',
-        cuenta: 'String',
+        usuario: 'String',
         departamento: 'String',
         prioridad: 'String',
         reporte: 'String',

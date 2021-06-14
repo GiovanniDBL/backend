@@ -14,16 +14,16 @@ function AuthController(request, response) {
     const token = jwt.sign({ loginUsers }, 'my_secret_key');
     const params = request.body;
 
-    loginUsers.cuenta = params.cuenta;
+    // loginUsers.cuenta = params.cuenta;
     loginUsers.pass = params.pass;
     loginUsers.nombre = params.nombre;
 
 
-    let query_verify = `CALL getUsers(?,?,?);`;
+    let query_verify = `CALL getUsers(?,?);`;
 
-    if (loginUsers.cuenta && loginUsers.nombre && loginUsers.pass) {
+    if (loginUsers.nombre && loginUsers.pass) {
 
-        easyConection.query(query_verify, [loginUsers.cuenta, loginUsers.nombre, loginUsers.pass], (err, rows) => {
+        easyConection.query(query_verify, [loginUsers.nombre, loginUsers.pass], (err, rows) => {
 
             if (err) {
                 response.status(500).send({ message: 'NÚMERO DE CUENTA INCORRECTO' });
@@ -34,7 +34,11 @@ function AuthController(request, response) {
                 if (JSON.stringify(result) == '[]') {
                     response.status(404).send({ message: 'EL USUARIO NO EXISTE' });
                 } else {
-                    response.status(200).send({ message: `EL USUARIO ${loginUsers.nombre} SI EXISTE`, token: token });
+                    response.status(200).send({
+                        message: `EL USUARIO ${loginUsers.nombre} SI EXISTE`,
+                        token: token,
+                        nombre: result
+                    });
 
                 }
                 // response.status(200).send({ message: 'USUARIO CORRECTO' });
