@@ -35,9 +35,11 @@ function AuthController(request, response) {
                     response.status(404).send({ message: 'EL USUARIO NO EXISTE' });
                 } else {
                     response.status(200).send({
-                        message: `EL USUARIO ${loginUsers.nombre} SI EXISTE`,
+                        // message: `EL USUARIO ${loginUsers.nombre} SI EXISTE`,
+                        message: `Sesión Exitosa`,
                         token: token,
-                        nombre: result
+                        nombre: loginUsers.nombre,
+
                     });
 
                 }
