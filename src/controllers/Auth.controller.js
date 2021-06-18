@@ -17,6 +17,7 @@ function AuthController(request, response) {
     // loginUsers.cuenta = params.cuenta;
     loginUsers.pass = params.pass;
     loginUsers.nombre = params.nombre;
+    loginUsers.id = params.id;
 
 
     let query_verify = `CALL getUsers(?,?);`;
@@ -39,6 +40,8 @@ function AuthController(request, response) {
                         message: `Sesión Exitosa`,
                         token: token,
                         nombre: loginUsers.nombre,
+                        id: rows[0],
+
 
                     });
 

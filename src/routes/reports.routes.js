@@ -19,20 +19,8 @@ api.post('/reportes', userController.newReport);
 api.post('/login', userLogin.AuthController);
 //* Crear Nuevos Usuarios *Solo para pruebas
 api.post('/', userController.newUser);
-
-function ensureToken(req, res, next) {
-    const bearerHeader = req.headers["authorization"];
-
-    if (typeof bearerHeader !== 'undefined') {
-
-        const bearer = bearerHeader.split(" ");
-        const bearerToken = bearer[1];
-        req.token = bearerToken;
-        next();
-    } else {
-        res.sendStatus(403);
-    }
-}
+// *Traer todos los departamentos existentes
+api.get('/departamento', userController.getDepartamento)
 
 //* Traer todos los reportes a la seccion del panel "Tickets"
 api.get('/getReports', getTickets.TraerTickets);

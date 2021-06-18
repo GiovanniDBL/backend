@@ -1,6 +1,6 @@
 module.exports = {
     loginUsers: {
-        cuenta: 'String',
+        id: 'String',
         nombre: 'String',
         pass: 'String'
     },

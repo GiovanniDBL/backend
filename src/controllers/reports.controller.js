@@ -13,7 +13,7 @@ function newReport(request, response) {
 
     const params = request.body;
 
-    reports.usuario = params.usuario;
+    reports.id_usuario = params.id_usuario;
     reports.departamento = params.departamento;
     reports.prioridad = params.prioridad;
     reports.reporte = params.reporte;
@@ -23,12 +23,12 @@ function newReport(request, response) {
 
     let query = `CALL setTickets (?,?,?,?,?,?);`;
 
-    if (reports.usuario && reports.departamento && reports.prioridad && reports.reporte && reports.asunto) {
+    if (reports.id_usuario && reports.departamento && reports.prioridad && reports.reporte && reports.asunto) {
 
 
 
 
-        easyConection.query(query, [reports.usuario, reports.departamento, reports.prioridad, reports.reporte, reports.multimedia, reports.asunto], (err) => {
+        easyConection.query(query, [reports.id_usuario, reports.departamento, reports.prioridad, reports.reporte, reports.multimedia, reports.asunto], (err) => {
 
 
             if (err) {
@@ -116,8 +116,21 @@ function newUser(reques, response) {
 
 }
 
+function getDepartamento(reques, response) {
+    easyConection.query('SELECT * FROM departamento;',
+        (error, res) => {
+            if (error) {
+                throw error;
+            } else {
+                // response.send(filas)
+                response.status(200).send(res);
+            }
+        });
+}
+
 module.exports = {
 
     newReport,
-    newUser
+    newUser,
+    getDepartamento
 }
