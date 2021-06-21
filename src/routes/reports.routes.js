@@ -5,16 +5,57 @@ const getTickets = require('../controllers/Tickets.controller');
 const Notas = require('../controllers/notas.controller');
 const { request, response } = require('express');
 const api = express.Router();
+const multer = require('multer');
+const path = require('path');
+const app = express();
+const { reports } = require('../models/reports.models')
 
 
+// *Ruta para guardar las img
 
+app.use('../uploads', express.static(path.join(__dirname, 'uploads')));
 
+const storage = multer.diskStorage({
+    destination: (req, file, callback) => {
+
+        callback(null, 'uploads')
+    },
+    filename: (req, file, callback) => {
+        callback(null, file.originalname);
+    }
+});
+
+const upload = multer({ storage });
+
+// app.post('/file', upload.single('file'), (req, res, next) => {
+//     const file = req.params;
+
+//     if (!file) {
+//         const error = new Error('No file');
+//         error.http.StatusCode = 400;
+
+//         return error;
+//     }
+
+//     res.send(file);
+// })
 
 
 //? ...........   RUTAS  ........
 
 //* Crear Reportes
-api.post('/reportes', userController.newReport);
+api.post('/reportes', upload.single('file'), userController.newReport, (req, res, next) => {
+
+    const file = req.file;
+
+    if (!file) {
+        const error = new Error('No file');
+        error.http.StatusCode = 400;
+
+        return next(error);
+    }
+    res.send(file);
+});
 //* Auth Login
 api.post('/login', userLogin.AuthController);
 //* Crear Nuevos Usuarios *Solo para pruebas
