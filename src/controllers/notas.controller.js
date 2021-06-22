@@ -35,7 +35,7 @@ function CrearNota(request, response) {
 
 function TraerNotas(request, response) {
 
-    connection.query('SELECT * FROM notas INNER JOIN reportes  ON reportes.id_reporte = notas.id_reporte WHERE reportes.id_reporte = ?', [request.params.id_reporte], (error, filas) => {
+    connection.query('SELECT * FROM notas INNER JOIN tickets ON tickets.id_ticket = notas.id_ticket WHERE tickets.id_ticket = ?;', [request.params.id_reporte], (error, filas) => {
         if (error) {
             throw error;
         } else {

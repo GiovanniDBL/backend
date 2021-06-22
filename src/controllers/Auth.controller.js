@@ -90,7 +90,7 @@ async function LoginPanel(request, res) {
         connection.query('SELECT * FROM roles INNER JOIN panel_users ON panel_users.rol = roles.rol WHERE nombre = ?', [loginPanel.nombre], async(error, results) => {
             if (results.lenght == 0 || !(await bcryptjs.compare(loginPanel.pass, results[0].pass))) {
 
-                res.status(202).send({ message: 'Usuario y/o password incorrectas' });
+                res.status(500).send({ message: 'Usuario y/o password incorrectas' });
                 console.log('Usuario y/o password incorrectas');
 
 
@@ -108,7 +108,7 @@ async function LoginPanel(request, res) {
             }
         })
     } else {
-        res.status(202).send({ message: 'Por favor ingrese un usuario y/o password' });
+        res.status(404).send({ message: 'Por favor ingrese un usuario y/o password' });
         console.log('Por favor ingrese un usuario y/o password');
     }
 
