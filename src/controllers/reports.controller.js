@@ -6,7 +6,11 @@ const bcrypt = require('bcryptjs');
 
 
 
+
+
+
 function newReport(request, response) {
+
 
     //*request.json({ message: 'this is protected' });
 
@@ -32,10 +36,10 @@ function newReport(request, response) {
 
 
             if (err) {
-                response.status(500).send({ message: 'NÚMERO DE CUENTA INCORRECTO' });
+                response.status(500).send({ message: 'ERROR AL ENVIAR TICKET' });
             } else {
 
-                response.status(200).send({ message: 'REPORTE ENVIADO' });
+                response.status(200).send({ message: 'TICKET ENVIADO' });
             }
 
 
@@ -45,7 +49,7 @@ function newReport(request, response) {
 
     } else {
 
-        response.status(400).send({ message: 'Faltan datos de reporte' });
+        response.status(400).send({ message: 'Faltan datos en el ticket' });
     }
 
 }

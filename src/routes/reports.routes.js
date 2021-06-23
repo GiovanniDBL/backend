@@ -3,12 +3,12 @@ const userController = require('../controllers/reports.controller');
 const userLogin = require('../controllers/Auth.controller');
 const getTickets = require('../controllers/Tickets.controller');
 const Notas = require('../controllers/notas.controller');
-const { request, response } = require('express');
 const api = express.Router();
 const multer = require('multer');
 const path = require('path');
 const app = express();
-const { reports } = require('../models/reports.models')
+const connection = require('../database/db')
+
 
 
 // *Ruta para guardar las img
@@ -27,35 +27,30 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-// app.post('/file', upload.single('file'), (req, res, next) => {
-//     const file = req.params;
 
-//     if (!file) {
-//         const error = new Error('No file');
-//         error.http.StatusCode = 400;
+//? ************   RUTAS  ************
 
-//         return error;
-//     }
-
-//     res.send(file);
-// })
-
-
-//? ...........   RUTAS  ........
-
-//* Crear Reportes
-api.post('/reportes', upload.single('file'), userController.newReport, (req, res, next) => {
-
+//* FILES
+api.post('/file', upload.single('file'), (req, res, next) => {
     const file = req.file;
+
+    const filesimg = {
+        multimedia: file.path
+    }
 
     if (!file) {
         const error = new Error('No file');
-        error.http.StatusCode = 400;
+        error.httpStatusCode = 400;
+
 
         return next(error);
     }
     res.send(file);
+    console.log(filesimg);
 });
+
+//* Crear Reportes
+api.post('/reportes', userController.newReport);
 //* Auth Login
 api.post('/login', userLogin.AuthController);
 //* Crear Nuevos Usuarios *Solo para pruebas
