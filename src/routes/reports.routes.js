@@ -8,6 +8,7 @@ const multer = require('multer');
 const path = require('path');
 const app = express();
 const connection = require('../database/db')
+const { usuarios } = require('../models/user.model');
 
 
 
@@ -34,10 +35,6 @@ const upload = multer({ storage });
 api.post('/file', upload.single('file'), (req, res, next) => {
     const file = req.file;
 
-    const filesimg = {
-        multimedia: file.path
-    }
-
     if (!file) {
         const error = new Error('No file');
         error.httpStatusCode = 400;
@@ -45,8 +42,24 @@ api.post('/file', upload.single('file'), (req, res, next) => {
 
         return next(error);
     }
+
+    const filesimg = {
+
+        usuario: 1,
+        departamento: 2,
+        prioridad: 'Urgente',
+        reporte: 'asdasd',
+        asunto: 'multi',
+        multimedia: file.path
+            // multimedia: file.path,
+            // asunto: 'asdasd'
+    }
+
     res.send(file);
     console.log(filesimg);
+
+
+    connection.query('INSERT INTO tickets set ?', [filesimg])
 });
 
 //* Crear Reportes

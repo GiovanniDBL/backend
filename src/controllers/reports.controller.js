@@ -8,7 +8,6 @@ const bcrypt = require('bcryptjs');
 
 
 
-
 function newReport(request, response) {
 
 
@@ -21,7 +20,7 @@ function newReport(request, response) {
     reports.departamento = params.departamento;
     reports.prioridad = params.prioridad;
     reports.reporte = params.reporte;
-    reports.multimedia = params.multimedia;
+    // reports.multimedia = params.multimedia;
     reports.asunto = params.asunto;
 
 
