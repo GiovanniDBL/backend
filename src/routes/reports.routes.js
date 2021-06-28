@@ -8,25 +8,25 @@ const multer = require('multer');
 const path = require('path');
 const app = express();
 const connection = require('../database/db')
-const { usuarios } = require('../models/user.model');
+const { reports } = require('../models/reports.models');
 
 
 
-api.post('/sendticket', (req, res) => {
+// api.post('/sendticket', (req, res) => {
 
-    const { usuario, departamento, prioridad, reporte, multimedia, asunto } = req.body;
+//     const { usuario, departamento, prioridad, reporte, multimedia, asunto } = req.body;
 
-    let sql = `INSERT INTO tickets(usuario, departamento, prioridad, reporte, multimedia, asunto) VALUES
-     ('${usuario}','${departamento}', '${prioridad}', '${reporte}', '${multimedia}', '${asunto}')`
+//     let sql = `INSERT INTO tickets(usuario, departamento, prioridad, reporte, multimedia, asunto) VALUES
+//      ('${usuario}','${departamento}', '${prioridad}', '${reporte}', '${multimedia}', '${asunto}')`
 
-    connection.query(sql, (err, rows, fields) => {
+//     connection.query(sql, (err, rows, fields) => {
 
-        if (err) throw err
-        else {
-            res.json({ status: 'Ticket enviado' })
-        }
-    })
-})
+//         if (err) throw err
+//         else {
+//             res.json({ status: 'Ticket enviado' })
+//         }
+//     })
+// })
 
 
 
@@ -44,51 +44,51 @@ api.post('/sendticket', (req, res) => {
 
 // *Ruta para guardar las img
 
-// app.use('../uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('../uploads', express.static(path.join(__dirname, 'uploads')));
 
-// const storage = multer.diskStorage({
-//     destination: (req, file, callback) => {
+const storage = multer.diskStorage({
+    destination: (req, file, callback) => {
 
-//         callback(null, 'uploads')
-//     },
-//     filename: (req, file, callback) => {
-//         callback(null, file.originalname);
-//     }
-// });
+        callback(null, 'uploads')
+    },
+    filename: (req, file, callback) => {
+        callback(null, file.originalname);
+    }
+});
 
-// const upload = multer({ storage });
+const upload = multer({ storage });
 
 
 //? ************   RUTAS  ************
 
 //* FILES
-// api.post('/file', upload.single('file'), (req, res, next) => {
-//     const file = req.file;
+api.post('/file', upload.single('file'), (req, res, next) => {
+    const file = req.file;
 
-//     if (!file) {
-//         const error = new Error('No file');
-//         error.httpStatusCode = 400;
-
-
-//         return next(error);
-//     }
-
-//     const filesimg = {
-
-//         usuario: 1,
-//         departamento: 2,
-//         prioridad: 'Urgente',
-//         reporte: 'asdasd',
-//         asunto: 'multi',
-//         multimedia: file.path
-//     }
-
-//     res.send(file);
-//     console.log(filesimg);
+    if (!file) {
+        const error = new Error('No file');
+        error.httpStatusCode = 400;
 
 
-//     connection.query('INSERT INTO tickets set ?', [filesimg])
-// });
+        return next(error);
+    }
+
+    const filesimg = {
+
+        usuario: reports.id_usuario,
+        departamento: reports.departamento,
+        prioridad: reports.prioridad,
+        reporte: reports.reporte,
+        asunto: reports.asunto,
+        multimedia: file.path
+    }
+
+    res.send(file);
+    console.log(filesimg);
+
+
+    connection.query('INSERT INTO tickets set ?', [filesimg])
+});
 
 //* Crear Reportes
 api.post('/reportes', userController.newReport);
