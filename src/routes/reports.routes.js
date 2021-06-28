@@ -84,7 +84,7 @@ api.post('/file', upload.single('file'), (req, res, next) => {
     }
 
     res.send(file);
-    console.log(filesimg);
+    console.log({ filesimg });
 
 
     connection.query('INSERT INTO tickets set ?', [filesimg])
