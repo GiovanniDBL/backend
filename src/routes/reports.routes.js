@@ -75,12 +75,18 @@ api.post('/file', upload.single('file'), (req, res, next) => {
 
     const filesimg = {
 
-        usuario: reports.id_usuario,
-        departamento: reports.departamento,
-        prioridad: reports.prioridad,
-        reporte: reports.reporte,
-        asunto: reports.asunto,
+        usuario: 1,
+        departamento: 1,
+        prioridad: 'Bajo',
+        reporte: 'prueba',
+        asunto: 'prueba',
         multimedia: file.path
+            // usuario: reports.id_usuario,
+            // departamento: reports.departamento,
+            // prioridad: reports.prioridad,
+            // reporte: reports.reporte,
+            // asunto: reports.asunto,
+            // multimedia: file.path
     }
 
     res.send(file);
