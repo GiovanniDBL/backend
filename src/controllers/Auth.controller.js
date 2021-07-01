@@ -91,7 +91,7 @@ async function LoginPanel(request, res) {
             if (results.lenght == 0 || !(await bcryptjs.compare(loginPanel.pass, results[0].pass))) {
 
                 res.status(500).send({ message: 'Usuario y/o password incorrectas' });
-                console.log('Usuario y/o password incorrectas');
+                // console.log('Usuario y/o password incorrectas');
 
 
             } else {
@@ -109,7 +109,7 @@ async function LoginPanel(request, res) {
         })
     } else {
         res.status(404).send({ message: 'Por favor ingrese un usuario y/o password' });
-        console.log('Por favor ingrese un usuario y/o password');
+        // console.log('Por favor ingrese un usuario y/o password');
     }
 
 }
